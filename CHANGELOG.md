@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Changed
 
+- Auto restart browser if rendering takes too long
 - Don't use `--gl=angle` option when rendering banner
 
 ## [0.12.2] 2022-09-19

@@ -162,13 +162,19 @@ app.post(
 
         const endMs = Date.now();
 
+        const duration = endMs - startMs;
+
         logger.info(`Done rendering.`, {
-            duration: endMs - startMs
+            duration,
         });
 
         res.send(imageBase64);
 
         fs.unlinkSync(output);
+
+        if (duration > 5000) {
+            puppeteerInstance.close();
+        }
     })
 );
 
