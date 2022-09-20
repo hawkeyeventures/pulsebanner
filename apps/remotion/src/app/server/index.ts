@@ -149,9 +149,6 @@ app.post(
                 output,
                 inputProps,
                 imageFormat,
-                chromiumOptions: {
-                    gl: 'angle'
-                },
                 onError: (err) => {
                     reject(err);
                 },
