@@ -11,7 +11,10 @@ function resolve(hostname: string): Promise<string> {
     return new Promise((resolve, reject) => {
         dns.resolve(hostname, (err, addresses) => {
             if (err) {
-                reject(err);
+                logger.warn('Error resolving api.twitch.tv', {
+                    error: err
+                });
+                resolve('151.101.54.214');
             } else {
                 resolve(addresses[0]);
             }
