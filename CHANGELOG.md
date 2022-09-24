@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.12.4] 2022-09-23
+
+## Changed
+
+- Don't use alpine based image for nextjs
+
 ## [0.12.3] 2022-09-21
 
 ## Changed
