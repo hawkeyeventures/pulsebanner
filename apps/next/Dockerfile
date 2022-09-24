@@ -1,4 +1,4 @@
-FROM node:14.1 as prisma
+FROM node:14.1-alpine as prisma
 WORKDIR /app
 COPY ./dist/apps/next/package.json .
 COPY ./prisma ./prisma
@@ -7,10 +7,9 @@ RUN npm install prisma
 RUN npx prisma generate
 
 # Install dependencies only when needed
-FROM node:16.3 AS deps
+FROM node:16.3-alpine3.12 AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-# RUN apt-get update && apt-get install -y libc6-compat
-# RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY ./dist/apps/next/package.json ./
 COPY ./patches ./patches
@@ -19,16 +18,13 @@ RUN npm i -g patch-package
 RUN npx patch-package
 
 # Production image, copy all the files and run next
-FROM node:16.3 AS runner
+FROM node:16.3-alpine3.12 AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
 
-# RUN addgroup -g 1001 -S nodejs
-# RUN adduser -S nextjs -u 1001
-
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system nextjs -uid 1001
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
 
 # You only need to copy next.config.js if you are NOT using the default configuration
 # COPY ./dist/apps/next/next.config.js ./
