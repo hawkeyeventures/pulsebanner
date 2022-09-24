@@ -34,4 +34,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const displayName = userResponse.data?.data[0]?.display_name;
 
     return displayName === undefined ? res.status(400).send('No name') : res.status(200).send({ displayName });
+
 }

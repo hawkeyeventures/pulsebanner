@@ -1,7 +1,6 @@
 import axios, { AxiosError } from "axios";
 import env from "./env";
 import { logger } from "./logger";
-import * as net from 'net';
 import * as dns from 'dns';
 
 export const twitchAxios = axios.create({
@@ -21,23 +20,16 @@ function resolve(hostname: string): Promise<string> {
 }
 
 twitchAxios.interceptors.request.use(function (config) {
-    const url = new URL(config.url!);
 
-    if (net.isIP(url.hostname)) {
-        // Skip
+    return resolve('api.twitch.tv').then((result) => {
+        config.headers = config.headers || {};
+        config.headers.Host = 'api.twitch.tv'; // put original hostname in Host header
+        const url = new URL(config.url!, config.baseURL);
+        url.hostname = result;
+        config.url = url.toString();
+        console.log(config.url);
         return config;
-    } else {
-
-        return resolve(url.hostname).then((result) => {
-            config.headers = config.headers || {};
-            config.headers.Host = url.hostname; // put original hostname in Host header
-
-            url.hostname = result;
-            config.url = new URL(url).toString();
-
-            return config;
-        });
-    }
+    });
 });
 
 twitchAxios.interceptors.response.use(function (response) {
@@ -49,9 +41,9 @@ twitchAxios.interceptors.response.use(function (response) {
 
     errorLogs.push(`${error.config.method?.toUpperCase()} ${error.config.url}`);
     errorLogs.push(`Error message: ${error.message}`);
-    errorLogs.push(`Axios request config: ${JSON.stringify(error.config, null, 2)}`);
+    // errorLogs.push(`Axios request config: ${JSON.stringify(error.config, null, 2)}`);
 
-    logger.error('Error occured during request (twich axios)', { method: error.config.method, url: error.config.url, message: error.message, config: error.config });
+    logger.error('Error occured during request (twich axios)', { method: error.config.method, url: error.config.url, message: error.message, headers: error.config.headers });
 
     if (env.ENABLE_DISCORD_WEBHOOKS) {
         axios.post(env.DISCORD_ERROR_WEBHOOK_URL, {
