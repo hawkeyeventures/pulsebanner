@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.12.5] 2022-09-23
+
+## Changed
+
+- Use `dns.resolve` instead of `dns.lookup` to resolve api.twitch.tv
+
 ## [0.12.4] 2022-09-23
 
 ## Changed
