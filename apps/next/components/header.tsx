@@ -38,7 +38,6 @@ import { MobileHeaderMenuItem } from './header/MobileHeaderMenuItem';
 import { Card } from './Card';
 import { CustomSession } from '@app/services/auth/CustomSession';
 import { useSession } from '@app/util/hooks/useSession';
-import { Promotion } from './header/Promotion';
 
 const headerImages = {
     profile: 'https://pb-static.sfo3.cdn.digitaloceanspaces.com/assets/feature-nav/header_profile.svg',

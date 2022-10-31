@@ -8,7 +8,7 @@ export const shareOnTwitterLink =
 export const merchLink = 'https://www.bonfire.com/pulsebanner/';
 
 export const holidayDecor = false;
-export const promo = true;
+export const promo = false;
 export const promoCode = 'EMGG';
 
 export const emggBannerBackground = 'https://pb-static.sfo3.cdn.digitaloceanspaces.com/banner-backgrounds/emgg.png';

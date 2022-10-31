@@ -46,12 +46,12 @@ export default function Layout({ children }: any) {
                 />
             )}
             <Flex zIndex={1} as={chakra.main} flex="1" px={['2', '8', '16', '36']} flexDirection="column" pt="64px">
-                <Promotion />
+                {/* <Promotion /> */}
                 <Box w="full" pt={['10', '20']}>
                     {children}
                 </Box>
             </Flex>
-            {showPromo && false && (
+            {showPromo && (
                 <Portal>
                     <Box
                         zIndex={1}
