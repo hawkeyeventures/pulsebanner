@@ -10,7 +10,7 @@ on:
 jobs:
     build_next:
         name: Build next
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
         environment: Production
         permissions:
             contents: read
@@ -108,7 +108,7 @@ jobs:
 
     build_remotion:
         name: Build remotion
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
         environment: Production
         permissions:
             contents: read
@@ -188,7 +188,7 @@ jobs:
 
     deploy_production:
         name: Deploy to Production
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
         needs: [build_next, build_remotion]
         environment: Production
         concurrency: Production

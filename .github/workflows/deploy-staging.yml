@@ -14,7 +14,7 @@ on:
 jobs:
     build_next:
         name: Build next
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
         environment: Staging
         permissions:
             contents: read
@@ -118,7 +118,7 @@ jobs:
 
     build_remotion:
         name: Build remotion
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
         environment: Staging
         permissions:
             contents: read
@@ -211,7 +211,7 @@ jobs:
 
     deploy_staging:
         name: Deploy to Staging
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
         needs: [build_next, build_remotion]
         environment: Staging
         concurrency: Staging

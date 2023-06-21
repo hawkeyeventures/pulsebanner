@@ -9,7 +9,7 @@ on:
 jobs:
     build_next:
         name: Build next
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
         permissions:
             contents: read
             packages: write
@@ -60,7 +60,7 @@ jobs:
 
     build_remotion:
         name: Build remotion
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
         permissions:
             contents: read
             packages: write
