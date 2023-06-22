@@ -104,7 +104,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         //     })
         // )?.[0];
 
-        const twitterProfile = await client.accountsAndUsers.accountVerifyCredentials(twitterInfo.oauth_token, twitterInfo.oauth_token_secret);
+        const twitterProfile = await client.accountsAndUsers.accountVerifyCredentials();
  
         if (twitterName) {
             return {
