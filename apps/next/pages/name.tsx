@@ -197,7 +197,7 @@ export default function Page({ twitterName, twitterProfile }: Props) {
 
     const showPricing: (force?: boolean) => boolean = (force?: boolean) => {
         if (!availableForAccount() || force) {
-            umami('show-pricing-modal');
+            //umami('show-pricing-modal');
             pricingToggle();
             return false;
         }
@@ -210,7 +210,7 @@ export default function Page({ twitterName, twitterProfile }: Props) {
 
     const toggle = async () => {
         if (ensureSignUp()) {
-            umami(twitterName && twitterName.enabled ? 'disable-name' : 'enable-name');
+           // umami(twitterName && twitterName.enabled ? 'disable-name' : 'enable-name');
             on();
             await saveSettings();
             const response = await axios.put(nameEndpoint);

@@ -197,7 +197,7 @@ export default function Page({ profilePic, twitterPic }: Props) {
 
     const toggle = async () => {
         if (ensureSignUp() && (profilePic.enabled || showPricing())) {
-            umami(profilePic && profilePic.enabled ? 'disable-profile' : 'enable-profile');
+          //  umami(profilePic && profilePic.enabled ? 'disable-profile' : 'enable-profile');
             on();
             await saveSettings();
             await axios.put(profileEndpoint);
@@ -229,7 +229,7 @@ export default function Page({ profilePic, twitterPic }: Props) {
     const qualified = !(paymentPlan === 'Free' && !paymentPlanResponse?.partner);
     const showPricing: (force?: boolean) => boolean = (force?: boolean) => {
         if (force || !qualified) {
-            umami('show-pricing-modal');
+           // umami('show-pricing-modal');
             pricingToggle();
             return false;
         }

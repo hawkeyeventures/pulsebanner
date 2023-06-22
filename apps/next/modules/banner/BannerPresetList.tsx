@@ -116,7 +116,7 @@ export const BannerPresetList: FC<BannerPresetListProps> = ({ paymentPlan, showP
                                     rightIcon={preset.free || paymentPlan !== 'Free' ? <FaArrowRight /> : undefined}
                                     colorScheme={'green'}
                                     onClick={() => {
-                                        umami(`click-preset-${preset.name}`);
+                                       // umami(`click-preset-${preset.name}`);
                                         if (!preset.free) {
                                             if (showPricingIfFree()) {
                                                 router.push(`/banner?preset=${key}`, undefined, {
