@@ -18,10 +18,8 @@ export const createTwitterClient = (oauth_token: string, oauth_token_secret: str
 export async function getUserInfo(userId: string, oauth_token: string, oauth_token_secret: string, providerAccountId: string): Promise<UsersLookup | undefined> {
     const client = createTwitterClient(oauth_token, oauth_token_secret);
     try {
-        const response = await client.accountsAndUsers.usersLookup({
-            user_id: providerAccountId,
-        });
-        return response[0];
+        const response = await client.accountsAndUsers.accountVerifyCredentials(oauth_token, oauth_token_secret);
+        return response;
     } catch (e) {
         return undefined;
     }

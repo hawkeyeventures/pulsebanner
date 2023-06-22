@@ -98,12 +98,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             };
         }
 
-        const twitterProfile = (
-            await client.accountsAndUsers.usersLookup({
-                user_id: twitterInfo?.providerAccountId,
-            })
-        )?.[0];
+        // const twitterProfile = (
+        //     await client.accountsAndUsers.usersLookup({
+        //         user_id: twitterInfo?.providerAccountId,
+        //     })
+        // )?.[0];
 
+        const twitterProfile = await client.accountsAndUsers.accountVerifyCredentials(twitterInfo.oauth_token, twitterInfo.oauth_token_secret);
+ 
         if (twitterName) {
             return {
                 props: {

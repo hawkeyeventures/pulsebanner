@@ -331,39 +331,47 @@ export const GiftPricing: React.FC<Props> = ({ priceMap, cancel_path, giftPriceI
                                 </Card>
                             </GridItem>
                             <GridItem colSpan={[1, 2]}>
-                                <GiftCard
-                                    onClickBuy={async (q) => handlePricingClick(gift('oneMonth').id, false, q)}
-                                    variant="large"
-                                    duration="1-month"
-                                    price={gift('oneMonth').unitAmount}
-                                    product={giftProduct}
-                                />
+                                {gift('oneMonth') ? (
+                                    <GiftCard
+                                        onClickBuy={async (q) => handlePricingClick(gift('oneMonth').id, false, q)}
+                                        variant="large"
+                                        duration="1-month"
+                                        price={gift('oneMonth').unitAmount}
+                                        product={giftProduct}
+                                    />
+                                ) : null}
                             </GridItem>
                             <GridItem colSpan={[1]}>
-                                <GiftCard
-                                    onClickBuy={async (q) => handlePricingClick(gift('threeMonths').id, false, q)}
-                                    duration="3-months"
-                                    price={gift('threeMonths').unitAmount}
-                                    product={giftProduct}
-                                />
+                                {gift('threeMonths') ? (
+                                    <GiftCard
+                                        onClickBuy={async (q) => handlePricingClick(gift('threeMonths').id, false, q)}
+                                        duration="3-months"
+                                        price={gift('threeMonths').unitAmount}
+                                        product={giftProduct}
+                                    />
+                                ) : null}
                             </GridItem>
                             <GridItem colSpan={[1]}>
-                                <GiftCard
-                                    onClickBuy={async (q) => handlePricingClick(gift('sixMonths').id, false, q)}
-                                    duration="6-months"
-                                    price={gift('sixMonths').unitAmount}
-                                    product={giftProduct}
-                                />
+                                {gift('sixMonths') ? (
+                                    <GiftCard
+                                        onClickBuy={async (q) => handlePricingClick(gift('sixMonths').id, false, q)}
+                                        duration="6-months"
+                                        price={gift('sixMonths').unitAmount}
+                                        product={giftProduct}
+                                    />
+                                ) : null}
                             </GridItem>
                             <GridItem colSpan={[1, 2]}>
-                                <GiftCard
-                                    onClickBuy={async (q) => handlePricingClick(gift('oneYear').id, false, q)}
-                                    variant="large"
-                                    duration="1-year"
-                                    price={gift('oneYear').unitAmount}
-                                    discount={gift('oneMonth').unitAmount * 12}
-                                    product={giftProduct}
-                                />
+                                {gift('oneYear') ? (
+                                    <GiftCard
+                                        onClickBuy={async (q) => handlePricingClick(gift('oneYear').id, false, q)}
+                                        variant="large"
+                                        duration="1-year"
+                                        price={gift('oneYear').unitAmount}
+                                        discount={gift('oneMonth').unitAmount * 12}
+                                        product={giftProduct}
+                                    />
+                                ) : null}
                             </GridItem>
                         </Grid>
                     </Container>
