@@ -30,10 +30,12 @@ export async function getBanner(userId: string, oauth_token: string, oauth_token
     const client = createTwitterClient(oauth_token, oauth_token_secret);
     let imageUrl: string | undefined = undefined;
     try {
-        const response = await client.accountsAndUsers.usersProfileBanner({
-            user_id: providerAccountId,
-        });
-        imageUrl = response.sizes['1500x500'].url;
+        const response = await client.accountsAndUsers.accountVerifyCredentials();
+        // const response = await client.accountsAndUsers.usersProfileBanner({
+        //     user_id: providerAccountId,
+        // });
+        // imageUrl = response.sizes['1500x500'].url;
+        imageUrl = response.profile_banner_url;
         logger.log('Fetched Twitter banner', { url: imageUrl, userId });
     } catch (e) {
         logger.error("Twitter API Error usersProfileBanner")
