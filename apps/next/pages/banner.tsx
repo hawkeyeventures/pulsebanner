@@ -704,7 +704,7 @@ export default function Page({ banner, originalBanner }: Props) {
                     only show this when after they have gone live once (and the originalBanner has been populated)
                     and when they are not selecting a preset
                 */}
-                {preset && originalBanner && (
+                {/* {preset && originalBanner && (
                     <>
                         <Box>
                             <HStack p="2" w="full">
@@ -737,8 +737,8 @@ export default function Page({ banner, originalBanner }: Props) {
                             onClose={() => setFileModal(false)}
                             title="Change offline banner"
                         />
-                    </>
-                )}
+                    </> 
+                )} */}
 
                 <Center>
                     <Stack direction={['column', 'row']}>

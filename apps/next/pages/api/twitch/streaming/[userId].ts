@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const twitchUserId = accounts['twitch'].providerAccountId;
             const authedTwitchAxios = await TwitchClientAuthService.authAxios(twitchAxios);
             const getIsStreaming = await authedTwitchAxios.get(`/helix/streams?user_id=${twitchUserId}`);
-            isStreaming = getIsStreaming.data.data.length !== 0;
+            isStreaming = getIsStreaming?.data?.data?.length !== 0 || false;
 
             return res.status(200).send({ isStreaming: isStreaming });
         }

@@ -21,7 +21,7 @@ export async function getUserInfo(userId: string, oauth_token: string, oauth_tok
         const response = await client.accountsAndUsers.accountVerifyCredentials();
         return response;
     } catch (e) {
-        logger.error("Twitter API Error accountVerifyCredentials")
+        logger.error('Twitter API Error accountVerifyCredentials');
         return undefined;
     }
 }
@@ -38,7 +38,7 @@ export async function getBanner(userId: string, oauth_token: string, oauth_token
         imageUrl = response.profile_banner_url;
         logger.log('Fetched Twitter banner', { url: imageUrl, userId });
     } catch (e) {
-        logger.error("Twitter API Error usersProfileBanner")
+        logger.error('Twitter API Error usersProfileBanner');
         logger.info('User does not have a banner setup. Will save empty for later', { userId });
         imageUrl = 'empty';
     }
@@ -55,7 +55,7 @@ export async function updateBanner(userId: string, oauth_token: string, oauth_to
         try {
             await client.accountsAndUsers.accountRemoveProfileBanner();
         } catch (e) {
-            logger.error("Twitter API Error accountRemoveProfileBanner")
+            logger.error('Twitter API Error accountRemoveProfileBanner');
             handleTwitterApiError(userId, e as any, 'Removing empty banner to update banner');
             return 400;
         }
@@ -65,7 +65,7 @@ export async function updateBanner(userId: string, oauth_token: string, oauth_to
                 banner: bannerBase64,
             });
         } catch (e) {
-            logger.error("Twitter API Error")
+            logger.error('Twitter API Error:', e);
             handleTwitterApiError(userId, e as any, 'Updating banner');
             return 400;
         }
@@ -89,7 +89,7 @@ export async function tweetStreamStatusLive(
             status: tweetContent === undefined ? `I am live! Come join the stream on twitch! ${streamLink}` : `${tweetContent} ${streamLink}`,
         });
     } catch (e) {
-        logger.error("Twitter API Error statusesUpdate")
+        logger.error('Twitter API Error statusesUpdate');
         // there could be a problem with how long the string is
         handleTwitterApiError(userId, e as any, 'Publishing tweet');
         return 400;
@@ -111,7 +111,7 @@ export async function tweetStreamStatusOffline(
             status: tweetContent === undefined ? `Thanks for watching! I will be live again soon! ${streamLink}` : `${tweetContent} ${streamLink}`,
         });
     } catch (e) {
-        logger.error("Twitter API Error statusesUpdate")
+        logger.error('Twitter API Error statusesUpdate');
         // there could be a problem with how long the string is
         handleTwitterApiError(userId, e as any, 'Publishing tweet');
         return 400;
@@ -127,7 +127,7 @@ export async function getCurrentTwitterName(userId: string, oauth_token: string,
         const name = account.name;
         return name;
     } catch (e) {
-        logger.error("Twitter API Error accountVerifyCredentials")
+        logger.error('Twitter API Error accountVerifyCredentials');
         handleTwitterApiError(userId, e as any, 'Get current twitter name');
         return '';
     }
@@ -139,7 +139,7 @@ export async function updateTwitterName(userId: string, oauth_token: string, oau
     try {
         await client.accountsAndUsers.accountUpdateProfile({ name: name });
     } catch (e) {
-        logger.error("Twitter API Error accountUpdateProfile")
+        logger.error('Twitter API Error accountUpdateProfile');
         await handleTwitterApiError(userId, e as any, 'Updating Twitter name');
         return 400;
     }
@@ -157,7 +157,7 @@ export async function getTwitterProfilePic(userId: string, oauth_token: string, 
         const profilePic = response.profile_image_url_https.replace('_normal', '');
         return profilePic;
     } catch (e) {
-        logger.error("Twitter API Error accountVerifyCredentials")
+        logger.error('Twitter API Error accountVerifyCredentials');
         handleTwitterApiError(userId, e as any, 'error getting twitter profile pic, setting to empty');
         return 'empty';
     }
@@ -173,7 +173,7 @@ export async function updateProfilePic(userId: string, oauth_token: string, oaut
                 image: profilePicBase64,
             });
         } catch (e) {
-            logger.error("Twitter API Error")
+            logger.error('Twitter API Error:', e);
             logger.error('Failed to update empty profile image', e);
         }
     } else {
@@ -182,7 +182,7 @@ export async function updateProfilePic(userId: string, oauth_token: string, oaut
                 image: profilePicBase64,
             });
         } catch (e) {
-            logger.error("Twitter API Error")
+            logger.error('Twitter API Error:', e);
             handleTwitterApiError(userId, e as any, 'Updating profile picture');
             return 400;
         }
@@ -219,7 +219,7 @@ export async function getTwitterUserLink(oauth_token: string, oauth_token_secret
         const screenName = response.screen_name;
         return `https://twitter.com/${screenName}`;
     } catch (e) {
-        logger.error("Twitter API Error accountVerifyCredentials")
+        logger.error('Twitter API Error accountVerifyCredentials');
         logger.error('Error building twitter link.', { error: e });
     }
     return null;
@@ -233,7 +233,7 @@ async function handleTwitterApiError(userId: string, e: { data?: { errors?: { me
             // Twitter API error
             if (!error) {
                 // error is undefined
-                sendError({ name: 'UndefinedTwitterError', message: "Error is udnefined"}, `userId: ${userId}\t Context: ${context}`);
+                sendError({ name: 'UndefinedTwitterError', message: 'Error is udnefined' }, `userId: ${userId}\t Context: ${context}`);
             } else if (error?.code === 88) {
                 // rate limit exceeded
                 logger.error(`Rate limit error, code 88. Rate limit will reset on ${new Date(e.data?._headers.get('x-rate-limit-reset') * 1000)}`, e);
@@ -245,15 +245,18 @@ async function handleTwitterApiError(userId: string, e: { data?: { errors?: { me
                 logger.error('Account is suspended and is not permitted to interact with API. Disabling features of user', { userId, e, context });
                 await flipFeatureEnabled(userId, 'banner', true);
                 await flipFeatureEnabled(userId, 'name', true);
-                sendError({...error, name: 'TwitterAccountSuspended'}, `Account is suspended. Disabled features successfully. userId: ${userId}\t Context: ${context}`);
+                sendError({ ...error, name: 'TwitterAccountSuspended' }, `Account is suspended. Disabled features successfully. userId: ${userId}\t Context: ${context}`);
             } else if (error.code === 120) {
                 logger.error('Twitter name is too long or has invalid characters. Not able to update', { userId, e, context });
-                sendError({...error, name: 'TwitterNameInvalidOrTooLong'}, `Twitter name is too long or has invalid characters and unable to update. userId: ${userId}\t Context: ${context}`);
+                sendError(
+                    { ...error, name: 'TwitterNameInvalidOrTooLong' },
+                    `Twitter name is too long or has invalid characters and unable to update. userId: ${userId}\t Context: ${context}`
+                );
             } else if (error.code === 326) {
                 logger.error('Twitter account is temporarily locked. Disabling features for user', { userId, e, context });
                 await flipFeatureEnabled(userId, 'banner', true);
                 await flipFeatureEnabled(userId, 'name', true);
-                sendError({...error, name: 'TwitterAccountLocked'}, `Account is locked. Disabled features successfully. userId: ${userId}\t Context: ${context}`);
+                sendError({ ...error, name: 'TwitterAccountLocked' }, `Account is locked. Disabled features successfully. userId: ${userId}\t Context: ${context}`);
             }
             // some other kind of error, e.g. read-only API trying to POST
             else {
