@@ -9,16 +9,16 @@ declare global {
     var _prisma: PrismaClient | undefined;
 }
 
-let numClients = 0;
+var numClients = 0;
 
 const createPrismaClient = () => {
     if (process.env.GITHUB_ACTIONS) {
         return new PrismaClient();
     }
-    console.log(process.env);
-    logger.info('Creating new Prisma client...');
-    logger.info('Total clients: ' + numClients);
+    // console.log(process.env);
+    logger.info('Creating new Prisma client...'); 
     numClients++;
+    logger.info('Total clients: ' + numClients);
     return new PrismaClient();
 };
 
