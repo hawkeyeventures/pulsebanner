@@ -229,7 +229,7 @@ export default function Page({ profilePic, twitterPic }: Props) {
     const qualified = !(paymentPlan === 'Free' && !paymentPlanResponse?.partner);
     const showPricing: (force?: boolean) => boolean = (force?: boolean) => {
         if (force || !qualified) {
-           // umami('show-pricing-modal');
+            umami('show-pricing-modal');
             pricingToggle();
             return false;
         }

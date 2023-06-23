@@ -74,10 +74,16 @@ export async function buildSession(session: NextSession, user: NextUser): Promis
                 }
             } catch (e) {
                 const client = createTwitterClient(account.oauth_token!, account.oauth_token_secret!);
-                const twitterUser = await client.accountsAndUsers.usersShow({
-                    user_id: account.providerAccountId
-                });
-                const avatar_url = twitterUser.profile_image_url_https;
+
+                let twitterUser = {};
+                try {
+                    twitterUser = await client.accountsAndUsers.accountVerifyCredentials();
+                } catch (error) {
+                    console.error(error);
+                }
+
+                const avatar_url = twitterUser?.profile_image_url_https || null;
+
                 await prisma.user.update({
                     where: {
                         id: user.id

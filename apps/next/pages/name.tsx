@@ -210,7 +210,7 @@ export default function Page({ twitterName, twitterProfile }: Props) {
 
     const toggle = async () => {
         if (ensureSignUp()) {
-           // umami(twitterName && twitterName.enabled ? 'disable-name' : 'enable-name');
+           umami(twitterName && twitterName.enabled ? 'disable-name' : 'enable-name');
             on();
             await saveSettings();
             const response = await axios.put(nameEndpoint);

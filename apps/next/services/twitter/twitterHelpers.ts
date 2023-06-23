@@ -21,6 +21,7 @@ export async function getUserInfo(userId: string, oauth_token: string, oauth_tok
         const response = await client.accountsAndUsers.accountVerifyCredentials();
         return response;
     } catch (e) {
+        logger.error("Twitter API Error accountVerifyCredentials")
         return undefined;
     }
 }
@@ -35,6 +36,7 @@ export async function getBanner(userId: string, oauth_token: string, oauth_token
         imageUrl = response.sizes['1500x500'].url;
         logger.log('Fetched Twitter banner', { url: imageUrl, userId });
     } catch (e) {
+        logger.error("Twitter API Error usersProfileBanner")
         logger.info('User does not have a banner setup. Will save empty for later', { userId });
         imageUrl = 'empty';
     }
@@ -51,6 +53,7 @@ export async function updateBanner(userId: string, oauth_token: string, oauth_to
         try {
             await client.accountsAndUsers.accountRemoveProfileBanner();
         } catch (e) {
+            logger.error("Twitter API Error accountRemoveProfileBanner")
             handleTwitterApiError(userId, e as any, 'Removing empty banner to update banner');
             return 400;
         }
@@ -60,6 +63,7 @@ export async function updateBanner(userId: string, oauth_token: string, oauth_to
                 banner: bannerBase64,
             });
         } catch (e) {
+            logger.error("Twitter API Error")
             handleTwitterApiError(userId, e as any, 'Updating banner');
             return 400;
         }
@@ -83,6 +87,7 @@ export async function tweetStreamStatusLive(
             status: tweetContent === undefined ? `I am live! Come join the stream on twitch! ${streamLink}` : `${tweetContent} ${streamLink}`,
         });
     } catch (e) {
+        logger.error("Twitter API Error statusesUpdate")
         // there could be a problem with how long the string is
         handleTwitterApiError(userId, e as any, 'Publishing tweet');
         return 400;
@@ -104,6 +109,7 @@ export async function tweetStreamStatusOffline(
             status: tweetContent === undefined ? `Thanks for watching! I will be live again soon! ${streamLink}` : `${tweetContent} ${streamLink}`,
         });
     } catch (e) {
+        logger.error("Twitter API Error statusesUpdate")
         // there could be a problem with how long the string is
         handleTwitterApiError(userId, e as any, 'Publishing tweet');
         return 400;
@@ -119,6 +125,7 @@ export async function getCurrentTwitterName(userId: string, oauth_token: string,
         const name = account.name;
         return name;
     } catch (e) {
+        logger.error("Twitter API Error accountVerifyCredentials")
         handleTwitterApiError(userId, e as any, 'Get current twitter name');
         return '';
     }
@@ -130,6 +137,7 @@ export async function updateTwitterName(userId: string, oauth_token: string, oau
     try {
         await client.accountsAndUsers.accountUpdateProfile({ name: name });
     } catch (e) {
+        logger.error("Twitter API Error accountUpdateProfile")
         await handleTwitterApiError(userId, e as any, 'Updating Twitter name');
         return 400;
     }
@@ -140,13 +148,14 @@ export async function getTwitterProfilePic(userId: string, oauth_token: string, 
     const client = createTwitterClient(oauth_token, oauth_token_secret);
 
     try {
-        const response = await client.accountsAndUsers.usersShow({ user_id: providerAccountId });
-
+        // const response = await client.accountsAndUsers.usersShow({ user_id: providerAccountId });
+        const response = await client.accountsAndUsers.accountVerifyCredentials();
         // https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/user-profile-images-and-banners
         // remove '_normal' to get the original sized profile image
         const profilePic = response.profile_image_url_https.replace('_normal', '');
         return profilePic;
     } catch (e) {
+        logger.error("Twitter API Error accountVerifyCredentials")
         handleTwitterApiError(userId, e as any, 'error getting twitter profile pic, setting to empty');
         return 'empty';
     }
@@ -162,6 +171,7 @@ export async function updateProfilePic(userId: string, oauth_token: string, oaut
                 image: profilePicBase64,
             });
         } catch (e) {
+            logger.error("Twitter API Error")
             logger.error('Failed to update empty profile image', e);
         }
     } else {
@@ -170,6 +180,7 @@ export async function updateProfilePic(userId: string, oauth_token: string, oaut
                 image: profilePicBase64,
             });
         } catch (e) {
+            logger.error("Twitter API Error")
             handleTwitterApiError(userId, e as any, 'Updating profile picture');
             return 400;
         }
@@ -206,6 +217,7 @@ export async function getTwitterUserLink(oauth_token: string, oauth_token_secret
         const screenName = response.screen_name;
         return `https://twitter.com/${screenName}`;
     } catch (e) {
+        logger.error("Twitter API Error accountVerifyCredentials")
         logger.error('Error building twitter link.', { error: e });
     }
     return null;

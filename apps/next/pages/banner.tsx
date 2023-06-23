@@ -354,7 +354,7 @@ export default function Page({ banner, originalBanner }: Props) {
     const toggle = async () => {
         // ensure user is signed up before enabling banner
         if (ensureSignUp()) {
-           // umami(banner && banner.enabled ? 'disable-banner' : 'enable-banner');
+           umami(banner && banner.enabled ? 'disable-banner' : 'enable-banner');
             on();
             await saveSettings();
             const response = await axios.put(bannerEndpoint);
@@ -407,7 +407,7 @@ export default function Page({ banner, originalBanner }: Props) {
 
     const showPricing: (force?: boolean) => boolean = (force?: boolean) => {
         if (force) {
-           // umami('show-pricing-modal');
+           umami('show-pricing-modal');
             pricingToggle();
             return false;
         }
@@ -416,7 +416,7 @@ export default function Page({ banner, originalBanner }: Props) {
 
     const showPricingIfFree: (force?: boolean) => boolean = (force?: boolean) => {
         if (force || paymentPlan === 'Free') {
-           // umami('show-pricing-modal');
+           umami('show-pricing-modal');
             pricingToggle();
             return false;
         }
