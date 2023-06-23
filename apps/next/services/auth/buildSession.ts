@@ -75,7 +75,7 @@ export async function buildSession(session: NextSession, user: NextUser): Promis
             } catch (e) {
                 const client = createTwitterClient(account.oauth_token!, account.oauth_token_secret!);
 
-                let twitterUser = {};
+                let twitterUser;
                 try {
                     twitterUser = await client.accountsAndUsers.accountVerifyCredentials();
                 } catch (error) {
