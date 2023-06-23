@@ -9,6 +9,7 @@ declare global {
     var _prisma: PrismaClient | undefined;
 }
 
+// eslint-disable-next-line no-var 
 var numClients = 0;
 
 const createPrismaClient = () => {
