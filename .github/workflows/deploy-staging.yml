@@ -92,7 +92,7 @@ jobs:
               with:
                   # list of Docker images to use as base name for tags
                   images: |
-                      ghcr.io/streamlux/pulsebanner-next
+                      ghcr.io/hawkeyeventures/pulsebanner-next
                   # generate Docker tags based on the following events/attributes
                   tags: |
                       type=sha,prefix=${{ env.BRANCH_NAME }}-,priority=1000
@@ -182,7 +182,7 @@ jobs:
               with:
                   # list of Docker images to use as base name for tags
                   images: |
-                      ghcr.io/streamlux/pulsebanner-remotion
+                      ghcr.io/hawkeyeventures/pulsebanner-remotion
                   # generate Docker tags based on the following events/attributes
                   tags: |
                       type=sha,prefix=${{ env.BRANCH_NAME }}-,priority=1000
