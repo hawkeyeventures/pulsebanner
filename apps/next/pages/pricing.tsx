@@ -238,7 +238,7 @@ const Page: NextPage<Props> = ({ products, priceMap, giftPriceIds }) => {
 
             <Container maxW="container.lg" experimental_spaceY="6" pt="8" pb="8" mt="-8">
                 <Heading size="xl" bgColor="white" textAlign="center" h="full" bgClip="text" fontSize={['xl', '3xl']} fontWeight="bold">
-                    Start your free 7 day trial of a PulseBanner Membership today!
+                    Start your free 14 day trial of a PulseBanner Membership today!
                 </Heading>
             </Container>
 

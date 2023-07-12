@@ -54,7 +54,7 @@ export const ProductCardDesktop: React.FC<ProductProps> = ({ product, billingInt
         if (paymentPlan && paymentPlan !== 'Free') {
             return 'Change Subscription';
         }
-        return `Start Free 7 Day Trial`;
+        return `Start Free 14 Day Trial`;
     };
 
     const yearly = billingInterval === 'year';
