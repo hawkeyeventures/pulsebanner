@@ -28,7 +28,7 @@ export const Emgg: LayerForm<typeof ForegroundComponents.Emgg> = ({ props, setPr
                     size="lg"
                     onChange={(e) => {
                         e.preventDefault();
-                        if (accountLevel !== 'Professional') {
+                        if (accountLevel === 'Free') {
                             showPricing(true);
                         } else {
                             setProps({ ...props, watermark: !props.watermark });

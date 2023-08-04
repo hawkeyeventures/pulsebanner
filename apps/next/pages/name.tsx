@@ -197,7 +197,7 @@ export default function Page({ twitterName, twitterProfile }: Props) {
 
     const showPricing: (force?: boolean) => boolean = (force?: boolean) => {
         if (!availableForAccount() || force) {
-            //umami('show-pricing-modal');
+            umami('show-pricing-modal');
             pricingToggle();
             return false;
         }
