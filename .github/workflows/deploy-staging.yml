@@ -108,6 +108,11 @@ jobs:
                   tags: ${{ steps.next-meta.outputs.tags }}
                   labels: ${{ steps.next-meta.outputs.labels }}
 
+            - name: 'prisma migrate reset'
+              run: npx prisma migrate reset --force
+              env:
+                  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+                  
             - name: 'prisma migrate deploy'
               run: npx prisma migrate deploy
               env:
