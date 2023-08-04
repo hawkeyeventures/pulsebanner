@@ -17,7 +17,11 @@ export const ImLive: LayerForm<typeof ForegroundComponents.ImLive> = ({ props, s
             ...props,
             ...newProps,
         });
-    };
+    }; 
+
+    if (accountLevel !== 'Free') { 
+        setProps({ ...props, watermark: false });
+    }
 
     return (
         <Box w="full" experimental_spaceY={2}>
@@ -139,7 +143,7 @@ export const ImLive: LayerForm<typeof ForegroundComponents.ImLive> = ({ props, s
                     size="lg"
                     onChange={(e) => {
                         e.preventDefault();
-                        if (accountLevel !== 'Professional') {
+                        if (accountLevel === 'Free') {
                             showPricing(true);
                         } else {
                             setProps({ ...props, watermark: !props.watermark });

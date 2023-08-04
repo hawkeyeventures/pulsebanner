@@ -197,7 +197,7 @@ export default function Page({ profilePic, twitterPic }: Props) {
 
     const toggle = async () => {
         if (ensureSignUp() && (profilePic.enabled || showPricing())) {
-          //  umami(profilePic && profilePic.enabled ? 'disable-profile' : 'enable-profile');
+            umami(profilePic && profilePic.enabled ? 'disable-profile' : 'enable-profile');
             on();
             await saveSettings();
             await axios.put(profileEndpoint);
