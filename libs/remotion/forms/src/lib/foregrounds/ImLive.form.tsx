@@ -2,7 +2,7 @@ import { StarIcon } from '@chakra-ui/icons';
 import { Box, Button, Checkbox, FormControl, FormLabel, HStack, Text, Input, Select, Wrap, WrapItem, Tag, IconButton, useBreakpoint } from '@chakra-ui/react';
 import { CustomColorPicker } from '@pulsebanner/react/color';
 import { ForegroundComponents } from '@pulsebanner/remotion/components';
-import { ComponentProps } from 'react';
+import { ComponentProps, useEffect } from 'react';
 import { LayerForm } from '../LayerForm';
 
 const fontList = ['Bangers', 'Quicksand', 'Akronim', 'Lacquer', 'Iceland', 'Langar'];
@@ -17,11 +17,14 @@ export const ImLive: LayerForm<typeof ForegroundComponents.ImLive> = ({ props, s
             ...props,
             ...newProps,
         });
-    }; 
+    };
 
-    if (accountLevel !== 'Free') { 
-        setProps({ ...props, watermark: false });
-    }
+    useEffect(() => {
+        if (accountLevel !== 'Free') {
+            setProps({ ...props, watermark: false });
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [accountLevel]);
 
     return (
         <Box w="full" experimental_spaceY={2}>
