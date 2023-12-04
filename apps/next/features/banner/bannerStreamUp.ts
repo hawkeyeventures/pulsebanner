@@ -54,7 +54,13 @@ const bannerStreamUp: Feature<string> = async (userId: string): Promise<string> 
         logger.info(`original bannerUrl for ${userId}`, { bannerUrl, userId });
 
         // store the current banner in s3
-        let dataToUpload: string = bannerUrl === 'empty' ? 'empty' : await imageToBase64(bannerUrl);
+        let dataToUpload: string =
+            bannerUrl === 'empty'
+                ? 'empty'
+                : await imageToBase64(bannerUrl).catch((e) => {
+                      logger.error('Error converting image to base64', { error: e, userId });
+                      return 'error'; // or handle this situation differently
+                  }); 
 
         const validDownload = S3Service.checkValidDownload(dataToUpload);
 

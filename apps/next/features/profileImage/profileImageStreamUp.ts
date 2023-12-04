@@ -43,7 +43,16 @@ const profileImageStreamUp: Feature<string> = async (userId: string): Promise<st
     const profilePicUrl: string = await getTwitterProfilePic(userId, twitterInfo.oauth_token, twitterInfo.oauth_token_secret, twitterInfo.providerAccountId);
 
     //upload profilePicUrl as base64 to s3 storage
-    const dataToUpload: string = profilePicUrl === 'empty' ? 'empty' : await imageToBase64(profilePicUrl);
+    let dataToUpload: string;
+
+    try {
+        dataToUpload = profilePicUrl === 'empty' ? 'empty' : await imageToBase64(profilePicUrl);
+    } catch (error) {
+        // Handle the error appropriately
+        logger.error('Error converting profile picture to base64', { error, profilePicUrl });
+        dataToUpload = 'error'; // Or handle this situation with a default value or specific logic
+    }
+
     try {
         await S3Service.uploadBase64(profilePicBucketName, userId, dataToUpload);
     } catch (e) {
