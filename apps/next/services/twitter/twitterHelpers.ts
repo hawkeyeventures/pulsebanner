@@ -33,7 +33,7 @@ export async function getBanner(userId: string, oauth_token: string, oauth_token
         const response = await client.accountsAndUsers.accountVerifyCredentials();
         // const response = await client.accountsAndUsers.usersProfileBanner({
         //     user_id: providerAccountId,
-        // });
+        // }); 
         // imageUrl = response.sizes['1500x500'].url;
         imageUrl = response.profile_banner_url;
         logger.log('Fetched Twitter banner', { url: imageUrl, userId });
@@ -135,11 +135,11 @@ export async function getCurrentTwitterName(userId: string, oauth_token: string,
 
 export async function updateTwitterName(userId: string, oauth_token: string, oauth_token_secret: string, name: string): Promise<TwitterResponseCode> {
     const client = createTwitterClient(oauth_token, oauth_token_secret);
-
     try {
         await client.accountsAndUsers.accountUpdateProfile({ name: name });
-    } catch (e) {
+    } catch (e) { 
         logger.error('Twitter API Error accountUpdateProfile');
+        logger.error('Failed to update twitter name', e);
         await handleTwitterApiError(userId, e as any, 'Updating Twitter name');
         return 400;
     }

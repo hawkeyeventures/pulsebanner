@@ -169,13 +169,13 @@ export default NextAuth({
                                 logger.error('Error converting banner to base64', { error, userId: message.user.id });
                                 // Handle the error appropriately, like sending a default image or logging the error
                                 // For example, uploading a default banner:
-                                S3Service.uploadBase64(env.BANNER_BACKUP_BUCKET, message.user.id, 'defaultBase64Banner')
+                                S3Service.uploadBase64(env.BANNER_BACKUP_BUCKET, message.user.id, 'empty')
                                     .then(() => {
-                                        logger.info('Uploaded default banner on new user signup.', { userId: message.user.id });
+                                        logger.info('Uploaded empty banner on new user signup.', { userId: message.user.id });
                                     })
                                     .catch((reason) => {
-                                        logger.error('Error uploading default banner to backup bucket on new user signup', reason, { userId: message.user.id });
-                                        sendError(reason, 'Error uploading default banner to backup bucket on new user signup');
+                                        logger.error('Error uploading empty banner to backup bucket on new user signup', reason, { userId: message.user.id });
+                                        sendError(reason, 'Error uploading empty banner to backup bucket on new user signup');
                                     });
                             });
                     }
